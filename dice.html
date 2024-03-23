@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dice Roll game</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    .dice {
+        display: inline-block;
+        width: 80px;
+        height: 80px;
+        background: red;
+        border: 1px solid black;
+        border-radius: 10px;
+        margin: 10px;
+        line-height: 80px;
+        font-size: 24px;
+        transition: transform 0.5s ease-in-out;
+    }
+    .roll {
+        animation: rollAnimation 1s ease-in-out forwards;
+    }
+    @keyframes rollAnimation {
+        0% { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+        25% { transform: rotateX(180deg) rotateY(180deg) rotateZ(0deg); }
+        50% { transform: rotateX(180deg) rotateY(180deg) rotateZ(180deg); }
+        75% { transform: rotateX(360deg) rotateY(360deg) rotateZ(180deg); }
+        100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+    }
+</style>
+</head>
+<body>
+<h1>Dice Roll Game</h1>
+<p>Enter your prediction (a number between 2 and 12) and then click the "Roll Dice" button:</p>
+<input type="numbers" id="prediction" min="2" max="12">
+<button onclick="rollDice()">Roll Dice</button>
+<p id="result"></p>
+
+<script>
+function rollDice() {
+    var prediction = parseInt(document.getElementById("prediction").value);
+    if (prediction < 2 || prediction > 12) {
+        document.getElementById("result").textContent = "Please enter a valid prediction between 2 and 12.";
+        return;
+    }
+    var dice1 = Math.floor(Math.random() * 6) + 1;
+    var dice2 = Math.floor(Math.random() * 6) + 1;
+    var sum = dice1 + dice2;
+    document.getElementById("result").innerHTML = '<div class="dice roll">' + dice1 + '</div>' +
+  '<div class="dice roll">' + dice2 + '</div>';
+    setTimeout(function() {
+        if (prediction === sum) {
+            document.getElementById("result").innerHTML += "<p>Congratulations! Your prediction matches the sum of the dice rolls.</p>";
+        } else {
+            document.getElementById("result").innerHTML += "<p>Sorry, your prediction does not match the sum of the dice rolls.</p>";
+        }
+    }, 1000);
+}
+</script>
+</body>
+</html>
